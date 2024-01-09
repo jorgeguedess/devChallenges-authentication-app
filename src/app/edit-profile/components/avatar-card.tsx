@@ -1,11 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CameraIcon } from "lucide-react";
 import { AvatarUpload } from "./avatar-upload";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-export const AvatarCard = () => {
-  const [avatar, setAvatar] = useState<string>("/default-user.png");
+interface AvatarCardProps {
+  avatar: string;
+  setAvatar: Dispatch<SetStateAction<string>>;
+}
 
+export const AvatarCard = ({ avatar, setAvatar }: AvatarCardProps) => {
   return (
     <form className="flex items-center gap-5">
       <label

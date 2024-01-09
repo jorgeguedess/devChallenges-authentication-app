@@ -16,7 +16,7 @@ export const CardItem = ({ title, text, isImage = false }: CardItemProps) => {
         </span>
         {isImage ? (
           <Avatar className="h-[4.5rem] w-[4.5rem] rounded-lg">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="/default-user.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         ) : (
