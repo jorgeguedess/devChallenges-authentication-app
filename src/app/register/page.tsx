@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { Svg } from "@/components/svg";
 import { Icon } from "@/components/icons";
@@ -27,6 +27,7 @@ import Link from "next/link";
 import { LockKeyholeIcon, MailIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const formSchema = z.object({
   email: z
@@ -51,12 +52,14 @@ export default function RegisterPage() {
     },
   });
 
-  const onSubmitHandler = async (
-    values: z.infer<typeof formSchema>,
-    { resetForm }: any,
+  const onSubmitHandler: SubmitHandler<z.infer<typeof formSchema>> = async (
+    values,
   ) => {
     try {
-      // implement logic register here
+      const response = await axios.post("/api/register", values);
+      const data = await response.data;
+      console.log({ data });
+      toast.success(data.msg);
       router.push("/login");
     } catch (error: any) {
       console.log({ error });
@@ -67,7 +70,11 @@ export default function RegisterPage() {
   return (
     <Card className="mx-auto mb-3 w-full max-w-[30rem] py-4 sm:py-8">
       <CardHeader className="container mb-5 gap-5 sm:mb-0">
-        {resolvedTheme === "dark" ? <Svg.LogoWhite /> : <Svg.Logo />}
+        {resolvedTheme === "dark" ? (
+          <Svg.LogoWhite aria-label="devchallenges logo" />
+        ) : (
+          <Svg.Logo aria-label="devchallenges logo" />
+        )}
         <CardTitle className="mb-4 max-w-80 text-lg font-semibold">
           Join thousands of learners from around the world
         </CardTitle>
@@ -79,6 +86,7 @@ export default function RegisterPage() {
       <CardContent className="container">
         <Form {...form}>
           <form
+            method="post"
             onSubmit={form.handleSubmit(onSubmitHandler)}
             className="mb-7 space-y-2"
           >
@@ -135,16 +143,16 @@ export default function RegisterPage() {
             or continue with these social profile
           </span>
           <div className="mb-8 flex items-center justify-center gap-2">
-            <Button variant="link" className="px-2 py-3">
+            <Button variant="link" className="px-2 py-3" aria-label="Google">
               <Icon.Google />
             </Button>
-            <Button variant="link" className="px-2 py-3">
+            <Button variant="link" className="px-2 py-3" aria-label="Facebook">
               <Icon.Facebook />
             </Button>
-            <Button variant="link" className="px-2 py-3">
+            <Button variant="link" className="px-2 py-3" aria-label="Twitter">
               <Icon.Twitter />
             </Button>
-            <Button variant="link" className="px-2 py-3">
+            <Button variant="link" className="px-2 py-3" aria-label="Github">
               <Icon.Github />
             </Button>
           </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +11,18 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { CardItem } from "./components/card-item";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ProfilePage() {
+  const { user } = useAuth();
+
+  if (!user)
+    return (
+      <div className="container flex h-full items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+
   return (
     <main>
       <div className="container mb-10 text-center sm:text-start">
@@ -38,12 +50,9 @@ export default function ProfilePage() {
         <CardContent>
           <ul className="flex w-full flex-col gap-5">
             <CardItem title="photo" isImage />
-            <CardItem title="name" text="Xanthe Neal" />
-            <CardItem
-              title="bio"
-              text="I am a software developer and with programmer"
-            />
-            <CardItem title="email" text="xanthe.neal@gmail.com" />
+            <CardItem title="name" text={user?.name} />
+            <CardItem title="bio" text={user?.bio} />
+            <CardItem title="email" text={user?.email} />
             <CardItem title="password" text="************" />
           </ul>
         </CardContent>

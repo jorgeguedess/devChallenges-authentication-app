@@ -21,60 +21,65 @@ export const Header = () => {
   const { resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { user } = useAuth();
-
-  const LogoutHandler = async () => {
-    try {
-      // implement logic logout here
-      console.log("logout");
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { user, LogoutHandler } = useAuth();
 
   if (!user) return null;
 
   return (
     <header>
       <div className="container flex w-full items-center justify-between py-5">
-        {resolvedTheme === "dark" ? <Svg.LogoWhite /> : <Svg.Logo />}
+        {resolvedTheme === "dark" ? (
+          <Svg.LogoWhite aria-label="devchallenges logo" />
+        ) : (
+          <Svg.Logo aria-label="devchallenges logo" />
+        )}
 
         <DropdownMenu onOpenChange={() => setIsOpen(!isOpen)}>
           <DropdownMenuTrigger asChild className="flex gap-3">
             <Button variant="ghost" className="flex items-center">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={user?.image || "/default-user.png"} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="sr-only flex items-center gap-3 sm:not-sr-only">
-                <p>Xanthe Neal</p>
-                {isOpen ? <Icon.DropDown /> : <Icon.DropUp />}
+                {user.name && <p className="capitalize">{user?.name}</p>}
+                {isOpen ? (
+                  <Icon.DropDown aria-label="Menu open" />
+                ) : (
+                  <Icon.DropUp aria-label="Menu close" />
+                )}
               </div>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mt-2 w-52" align="end">
             <DropdownMenuItem asChild>
-              <Link href="/profile" className="flex w-full items-center gap-3">
+              <Link
+                href="/"
+                className="flex w-full cursor-pointer items-center gap-3"
+              >
                 <Icon.Account />
                 My Profile
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={"/"} className="flex w-full items-center gap-3">
+              <Link
+                href={"/"}
+                className="flex w-full cursor-pointer items-center gap-3"
+              >
                 <Icon.Group />
                 Group Chat
               </Link>
             </DropdownMenuItem>
             <Separator className="my-3" />
             <DropdownMenuItem asChild>
-              <Link
+              <Button
+                variant="link"
                 onClick={LogoutHandler}
-                href={"/login"}
-                className="flex w-full items-center gap-3 text-destructive"
+                className="flex w-full cursor-pointer items-center justify-start gap-3 text-destructive hover:no-underline"
               >
                 <LogOutIcon />
                 Logout
-              </Link>
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
