@@ -33,10 +33,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const fetchData = async () => {
     try {
-    //   const response = await axios.get("/api/profile");
-    //   const data = await response.data;
-    //   setUser(data?.user);
-    //   return response;
+      const response = await axios.get("/api/profile");
+      const data = await response.data;
+      setUser(data?.user);
+      return response;
     } catch (error: any) {
       console.error(error);
       toast.error(error.message);
@@ -46,10 +46,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const LogoutHandler = async () => {
     try {
-    //   const response = await axios.post("/api/logout");
-    //   const data = await response.data;
-    //   toast.success(data.msg);
-    //   setUser(null);
+      const response = await axios.post("/api/logout");
+      const data = await response.data;
+      toast.success(data.msg);
+      setUser(null);
       router.push("/login");
     } catch (error: any) {
       toast.error(error.response?.data?.error);
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-    const isPrivatePath = ["/", "/update-profile"];
+    const isPrivatePath = ["/", "/edit-profile"];
     if (isPrivatePath.includes(pathName)) {
       fetchData();
     } else {
