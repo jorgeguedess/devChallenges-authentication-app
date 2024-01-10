@@ -22,14 +22,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { Svg } from "@/components/svg";
-import { Icon } from "@/components/icons";
 import Link from "next/link";
-import { LockKeyholeIcon, MailIcon } from "lucide-react";
+import { LockKeyholeIcon, MailIcon, UserIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { SocialButtons } from "@/components/social-buttons";
 
 const formSchema = z.object({
+  name: z.string().min(1, "Name is required").max(30, "Name too long"),
   email: z
     .string()
     .min(1, "Email is required")
@@ -47,6 +48,7 @@ export default function RegisterPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -90,6 +92,23 @@ export default function RegisterPage() {
             onSubmit={form.handleSubmit(onSubmitHandler)}
             className="mb-7 space-y-2"
           >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
+                        <UserIcon />
+                      </div>
+                      <Input placeholder="Name" {...field} className="pl-12" />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -142,20 +161,7 @@ export default function RegisterPage() {
           <span className="mb-5 inline-block text-sm text-secondary">
             or continue with these social profile
           </span>
-          <div className="mb-8 flex items-center justify-center gap-2">
-            <Button variant="link" className="px-2 py-3" aria-label="Google">
-              <Icon.Google />
-            </Button>
-            <Button variant="link" className="px-2 py-3" aria-label="Facebook">
-              <Icon.Facebook />
-            </Button>
-            <Button variant="link" className="px-2 py-3" aria-label="Twitter">
-              <Icon.Twitter />
-            </Button>
-            <Button variant="link" className="px-2 py-3" aria-label="Github">
-              <Icon.Github />
-            </Button>
-          </div>
+          <SocialButtons />
           <p className="text-secondary">
             Adready a member?{" "}
             <Link

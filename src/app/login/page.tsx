@@ -16,13 +16,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Svg } from "@/components/svg";
-import { Icon } from "@/components/icons";
 import Link from "next/link";
 import { LockKeyholeIcon, MailIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { SocialButtons } from "@/components/social-buttons";
 
 const formSchema = z.object({
   email: z
@@ -79,8 +79,9 @@ export default function LoginPage() {
       <CardContent className="container">
         <Form {...form}>
           <form
+            method="post"
             onSubmit={form.handleSubmit(onSubmitHandler)}
-            className="mb-7 space-y-2"
+            className="mb-3 space-y-2"
           >
             <FormField
               control={form.control}
@@ -131,24 +132,18 @@ export default function LoginPage() {
             </Button>
           </form>
         </Form>
-        <div className="w-full text-center">
-          <span className="mb-5 inline-block text-sm text-secondary">
+
+        <div className="flex w-full flex-col gap-5 text-center">
+          <Link
+            href={"/forget-password"}
+            className="mb-3 self-end text-sm text-link hover:underline focus:underline"
+          >
+            Forget password?
+          </Link>
+          <span className="inline-block text-sm text-secondary">
             or continue with these social profile
           </span>
-          <div className="mb-8 flex items-center justify-center gap-2">
-            <Button variant="link" className="px-2 py-3" aria-label="Google">
-              <Icon.Google />
-            </Button>
-            <Button variant="link" className="px-2 py-3" aria-label="Facebook">
-              <Icon.Facebook />
-            </Button>
-            <Button variant="link" className="px-2 py-3" aria-label="Twitter">
-              <Icon.Twitter />
-            </Button>
-            <Button variant="link" className="px-2 py-3" aria-label="Github">
-              <Icon.Github />
-            </Button>
-          </div>
+          <SocialButtons />
           <p className="text-secondary">
             Don{"'"}t have an account yet?{" "}
             <Link
