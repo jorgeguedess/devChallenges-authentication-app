@@ -3,7 +3,12 @@ import { NextResponse } from "next/server";
 export const middleware = (request: any) => {
   const pathVaiable = request.nextUrl.pathname;
   console.log({ pathVaiable });
-  const publicPath = ["/register", "/login"];
+  const publicPath = [
+    "/register",
+    "/edit-password",
+    "/forget-password",
+    "/login",
+  ];
   const auth = request.cookies.get("token");
 
   if (publicPath.includes(pathVaiable) && auth) {
@@ -18,5 +23,12 @@ export const middleware = (request: any) => {
 };
 
 export const config = {
-  matcher: ["/", "/edit-profile", "/register", "/login"],
+  matcher: [
+    "/",
+    "/update-profile",
+    "/edit-password",
+    "/update-password",
+    "/register",
+    "/login",
+  ],
 };

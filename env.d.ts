@@ -2,6 +2,11 @@ declare namespace NodeJS {
   interface ProcessEnv {
     MONGO_URI: string;
     AUTH_JWT: string;
+    FORGET_JWT: string;
+    EMAIL_HOST: string;
+    EMAIL_PORT: number;
+    EMAIL_USER: string;
+    EMAIL_PASSWORD: string;
     GOOGLE_ID: string;
     GOOGLE_SECRET: string;
     FACEBOOK_ID: string;
