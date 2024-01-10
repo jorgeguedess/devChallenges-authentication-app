@@ -52,8 +52,12 @@ export default function ProfilePage() {
             <CardItem title="photo" isImage />
             <CardItem title="name" text={user?.name} />
             <CardItem title="bio" text={user?.bio} />
+            <CardItem title="phone" text={user?.phone} />
             <CardItem title="email" text={user?.email} />
-            <CardItem title="password" text="************" />
+            <CardItem
+              title="password"
+              text={user?.password || "************"}
+            />
           </ul>
         </CardContent>
       </Card>

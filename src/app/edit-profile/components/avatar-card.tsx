@@ -10,7 +10,7 @@ interface AvatarCardProps {
 
 export const AvatarCard = ({ avatar, setAvatar }: AvatarCardProps) => {
   return (
-    <form className="flex items-center gap-5">
+    <form method="post" className="flex items-center gap-5">
       <label
         htmlFor="fileInput"
         className="relative flex cursor-pointer items-center gap-5"

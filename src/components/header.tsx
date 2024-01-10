@@ -54,23 +54,14 @@ export const Header = () => {
           <DropdownMenuContent className="mt-2 w-52" align="end">
             <DropdownMenuItem asChild>
               <Link
-                href="/"
+                href="/edit-profile"
                 className="flex w-full cursor-pointer items-center gap-3"
               >
                 <Icon.Account />
-                My Profile
+                Edit Profile
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                href={"/"}
-                className="flex w-full cursor-pointer items-center gap-3"
-              >
-                <Icon.Group />
-                Group Chat
-              </Link>
-            </DropdownMenuItem>
-            <Separator className="my-3" />
+            <Separator className="my-2" />
             <DropdownMenuItem asChild>
               <Button
                 variant="link"

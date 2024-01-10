@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
 
 export const IconDropDown = (props: ComponentProps<"svg">) => {
