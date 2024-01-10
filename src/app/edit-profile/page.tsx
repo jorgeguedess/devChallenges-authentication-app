@@ -25,7 +25,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const normalize = (text: string) => text.replaceAll("\r\n", "\n");
 
@@ -35,21 +35,38 @@ const formSchema = z.object({
     .min(1, "Name is required")
     .min(2, "Name must be at least 2 characters."),
   bio: z
-    .string()
+    .union([
+      z.string().min(1, "Bio is required").max(80, "Bio too long"),
+      z.string().length(0),
+    ])
     .transform(normalize)
-    .pipe(z.string().min(1, "Bio is required").max(40, "Bio too long")),
+    .optional()
+    .or(z.literal("")),
+
   phone: z
-    .string()
-    .min(1, "Phone is required")
-    .regex(phoneRegex, "Invalid Number!"),
+    .union([
+      z
+        .string()
+        .min(1, "Phone is required")
+        .regex(phoneRegex, "Invalid Number!"),
+      z.string().length(0),
+    ])
+    .optional()
+    .or(z.literal("")),
   email: z
     .string()
     .min(1, "Email is required")
     .email("Email must be a valid email"),
   password: z
-    .string()
-    .min(1, "Password is required")
-    .min(6, "Password must be greater than 6 characters"),
+    .union([
+      z
+        .string()
+        .min(1, "Password is required")
+        .min(6, "Password must be greater than 6 characters"),
+      z.string().length(0),
+    ])
+    .optional()
+    .or(z.literal("")),
 });
 
 export default function EditProfilePage() {
@@ -63,13 +80,21 @@ export default function EditProfilePage() {
     bio: user?.bio,
     phone: user?.phone,
     email: user?.email,
-    password: user?.password,
+    password: user?.password || "",
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: values,
   });
+
+  useEffect(() => {
+    console.log("renderizou");
+    form.setValue(
+      "password",
+      form.getValues("password") || user?.password || "",
+    );
+  }, [form, user]);
 
   const onSubmitHandler: SubmitHandler<z.infer<typeof formSchema>> = async (
     values,
@@ -80,14 +105,16 @@ export default function EditProfilePage() {
       toast.success(data.msg);
       router.push("/");
     } catch (error: any) {
+      console.error(error);
       toast.error(error?.response?.data?.error);
     }
   };
 
-  if (!user) {
-    const location = window.location;
-    if (location.href) router.push("/");
-  }
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
 
   return (
     <main>
@@ -110,6 +137,7 @@ export default function EditProfilePage() {
         <CardContent className="container">
           <Form {...form}>
             <form
+              method="post"
               onSubmit={form.handleSubmit(onSubmitHandler)}
               className="space-y-8"
             >
@@ -185,7 +213,7 @@ export default function EditProfilePage() {
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your password..."
+                        placeholder="Enter your new password..."
                         type="password"
                         className="h-14 p-4"
                         {...field}

@@ -3,11 +3,13 @@ import { VerifyToken } from "@/lib/Service/Token.service";
 import { ConnectDB } from "@/lib/config/db";
 import { UserModel } from "@/lib/models/User.models";
 import { NextResponse } from "next/server";
+import { User } from "@/types/user";
 
 ConnectDB();
 export const PUT = async (request: any) => {
   const auth = request.cookies.get("token") || "";
-  const { name, email, password, bio, phone } = await request.json();
+  const { name, email, password, bio, phone, image } =
+    (await request.json()) as User;
 
   if (!auth) {
     return NextResponse.json(
@@ -33,12 +35,7 @@ export const PUT = async (request: any) => {
       },
     );
   }
-
-  const newPassword = await bcrypt.hash(password, 10);
-
-  const existUser = await UserModel.findByIdAndUpdate(userId, {
-    $set: { name, email, newPassword, bio, phone },
-  });
+  const existUser = await UserModel.findById(userId);
 
   if (!existUser) {
     return NextResponse.json(
@@ -51,6 +48,17 @@ export const PUT = async (request: any) => {
       },
     );
   }
+
+  let updateFields: any = { name, email, bio, phone, image };
+
+  if (password && password.length > 0) {
+    const hashPassword = await bcrypt.hash(password, 10);
+    updateFields.password = hashPassword;
+  }
+
+  await UserModel.findByIdAndUpdate(userId, {
+    $set: updateFields,
+  });
 
   return NextResponse.json(
     {
