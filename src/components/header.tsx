@@ -38,7 +38,9 @@ export const Header = () => {
           <DropdownMenuTrigger asChild className="flex gap-3">
             <Button variant="ghost" className="flex items-center">
               <Avatar>
-                <AvatarImage src={user?.image || "/default-user.png"} />
+                <AvatarImage
+                  src={user?.photoURL || "/images/default-user.png"}
+                />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="sr-only flex items-center gap-3 sm:not-sr-only">

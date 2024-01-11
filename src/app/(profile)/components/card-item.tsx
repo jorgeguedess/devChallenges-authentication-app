@@ -4,19 +4,19 @@ import { Separator } from "@/components/ui/separator";
 interface CardItemProps {
   title: string;
   text?: string;
-  isImage?: boolean;
+  image?: string;
 }
 
-export const CardItem = ({ title, text, isImage = false }: CardItemProps) => {
+export const CardItem = ({ title, text, image }: CardItemProps) => {
   return (
     <>
       <li className="container flex flex-wrap items-center justify-between gap-2 py-1">
         <span className="text-sm font-medium uppercase text-border">
           {title}
         </span>
-        {isImage ? (
+        {image ? (
           <Avatar className="h-[4.5rem] w-[4.5rem] rounded-lg">
-            <AvatarImage src="/default-user.png" />
+            <AvatarImage src={image} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         ) : (

@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 export const middleware = (request: any) => {
   const pathVaiable = request.nextUrl.pathname;
-  console.log({ pathVaiable });
   const publicPath = [
     "/register",
     "/edit-password",
@@ -18,8 +17,6 @@ export const middleware = (request: any) => {
   if (!publicPath.includes(pathVaiable) && !auth) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-
-  console.log({ auth });
 };
 
 export const config = {

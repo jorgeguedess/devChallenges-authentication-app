@@ -21,8 +21,11 @@ const Schema = new mongoose.Schema(
     phone: {
       type: String,
     },
-    image: {
+    photoURL: {
       type: String,
+    },
+    media: {
+      type: Buffer,
     },
   },
   {

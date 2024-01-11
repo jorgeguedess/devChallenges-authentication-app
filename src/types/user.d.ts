@@ -4,5 +4,6 @@ export interface User {
   password: string;
   bio: string;
   phone: string;
-  image: string;
+  photoURL: string;
+  media: File;
 }

@@ -8,7 +8,7 @@ import { User } from "@/types/user";
 ConnectDB();
 export const PUT = async (request: any) => {
   const auth = request.cookies.get("token") || "";
-  const { name, email, password, bio, phone, image } =
+  const { name, email, password, bio, phone, media } =
     (await request.json()) as User;
 
   if (!auth) {
@@ -49,11 +49,16 @@ export const PUT = async (request: any) => {
     );
   }
 
-  let updateFields: any = { name, email, bio, phone, image };
+  let updateFields: any = { name, email, bio, phone };
 
   if (password && password.length > 0) {
     const hashPassword = await bcrypt.hash(password, 10);
     updateFields.password = hashPassword;
+  }
+
+  if (media !== null) {
+    console.log(media);
+    updateFields.photoURL = media;
   }
 
   await UserModel.findByIdAndUpdate(userId, {

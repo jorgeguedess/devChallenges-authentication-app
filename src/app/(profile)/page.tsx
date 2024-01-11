@@ -49,7 +49,10 @@ export default function ProfilePage() {
         <Separator className="hidden sm:block" />
         <CardContent>
           <ul className="flex w-full flex-col gap-5">
-            <CardItem title="photo" isImage />
+            <CardItem
+              title="photo"
+              image={user?.photoURL || "/images/default-user.png"}
+            />
             <CardItem title="name" text={user?.name} />
             <CardItem title="bio" text={user?.bio} />
             <CardItem title="phone" text={user?.phone} />

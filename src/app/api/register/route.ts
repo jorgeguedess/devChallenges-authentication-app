@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 ConnectDB();
 export const POST = async (request: Request) => {
-  const { name, email, password, bio, phone } = await request.json();
+  const { name, email, password, bio, phone, photoURL } = await request.json();
 
   const existUser = await UserModel.findOne({ email });
   if (existUser) {
@@ -19,7 +19,7 @@ export const POST = async (request: Request) => {
     );
   }
 
-  await UserModel.create({ name, email, password, bio, phone });
+  await UserModel.create({ name, email, password, bio, phone, photoURL });
 
   return NextResponse.json(
     {

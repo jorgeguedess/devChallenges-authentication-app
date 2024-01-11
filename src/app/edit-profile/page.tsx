@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { AvatarCard } from "./components/avatar-card";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -25,11 +24,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { AvatarCard } from "./components/avatar-card";
+import { getBase64 } from "@/lib/utils";
 
 const normalize = (text: string) => text.replaceAll("\r\n", "\n");
 
 const formSchema = z.object({
+  media: z.any().optional(),
   name: z
     .string()
     .min(1, "Name is required")
@@ -69,18 +71,21 @@ const formSchema = z.object({
     .or(z.literal("")),
 });
 
+const defaultAvatar = "/images/default-user.png";
+
 export default function EditProfilePage() {
   const router = useRouter();
   const { user } = useAuth();
-  const [avatar, setAvatar] = useState<string>("/default-user.png");
+
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
   const values = {
-    image: user?.image,
     name: user?.name,
     bio: user?.bio,
     phone: user?.phone,
     email: user?.email,
     password: user?.password || "",
+    media: user?.media,
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -89,12 +94,23 @@ export default function EditProfilePage() {
   });
 
   useEffect(() => {
-    console.log("renderizou");
     form.setValue(
       "password",
       form.getValues("password") || user?.password || "",
     );
+    form.setValue("media", form.getValues("media"));
   }, [form, user]);
+
+  const handleFileChange = async (
+    event: ChangeEvent<HTMLInputElement>,
+    field: any,
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = await getBase64(event.target.files[0]);
+      setAvatarPreview(file as any);
+      field.onChange(file);
+    }
+  };
 
   const onSubmitHandler: SubmitHandler<z.infer<typeof formSchema>> = async (
     values,
@@ -114,7 +130,7 @@ export default function EditProfilePage() {
     if (!user) {
       router.push("/");
     }
-  }, [user]);
+  }, [router, user]);
 
   return (
     <main>
@@ -131,9 +147,6 @@ export default function EditProfilePage() {
         </p>
       </div>
       <Card className="mx-auto mb-10 w-full max-w-[53rem]">
-        <CardHeader className="container mb-12 flex-row items-center gap-5 sm:mb-0">
-          <AvatarCard avatar={values.image || avatar} setAvatar={setAvatar} />
-        </CardHeader>
         <CardContent className="container">
           <Form {...form}>
             <form
@@ -141,6 +154,22 @@ export default function EditProfilePage() {
               onSubmit={form.handleSubmit(onSubmitHandler)}
               className="space-y-8"
             >
+              <FormField
+                control={form.control}
+                name="media"
+                render={({ field }) => (
+                  <FormItem className="flex items-center gap-5">
+                    <FormControl>
+                      <AvatarCard
+                        avatar={(avatarPreview as any) ?? user?.photoURL}
+                        field={field}
+                        handleFileChange={handleFileChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="name"

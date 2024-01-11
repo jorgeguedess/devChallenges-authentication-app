@@ -60,7 +60,6 @@ export default function RegisterPage() {
     try {
       const response = await axios.post("/api/register", values);
       const data = await response.data;
-      console.log({ data });
       toast.success(data.msg);
       router.push("/login");
     } catch (error: any) {

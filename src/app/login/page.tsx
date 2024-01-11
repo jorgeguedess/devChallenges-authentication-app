@@ -55,7 +55,6 @@ export default function LoginPage() {
     try {
       const response = await axios.post("/api/login", values);
       const data = await response.data;
-      console.log({ data });
       toast.success(data.msg);
       router.push("/");
     } catch (error: any) {
