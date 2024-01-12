@@ -25,7 +25,7 @@ export default function ProfilePage() {
 
   return (
     <main>
-      <div className="container mb-10 text-center sm:text-start">
+      <div className="container mb-10 text-center">
         <h1 className="mb-2 text-2xl sm:text-4xl">Personal info</h1>
         <p className="text-sm font-light sm:text-lg">
           Basic info, like your name and photo
@@ -41,7 +41,9 @@ export default function ProfilePage() {
           </div>
           <Link
             href={"/edit-profile"}
-            className={`${buttonVariants({ variant: "outline" })}} w-24`}
+            className={`${buttonVariants({
+              variant: "outline",
+            })} w-24`}
           >
             Edit
           </Link>

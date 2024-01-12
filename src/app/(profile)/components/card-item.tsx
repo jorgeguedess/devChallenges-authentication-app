@@ -11,7 +11,7 @@ export const CardItem = ({ title, text, image }: CardItemProps) => {
   return (
     <>
       <li className="container flex flex-wrap items-center justify-between gap-2 py-1">
-        <span className="text-sm font-medium uppercase text-border">
+        <span className="text-sm font-medium uppercase text-border sm:w-20">
           {title}
         </span>
         {image ? (
@@ -20,7 +20,9 @@ export const CardItem = ({ title, text, image }: CardItemProps) => {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         ) : (
-          <p className="max-w-52 truncate font-medium sm:text-lg">{text}</p>
+          <p className="max-w-52 truncate font-medium sm:max-w-[32.5rem] sm:text-lg md:w-[30rem]">
+            {text}
+          </p>
         )}
       </li>
       <Separator />

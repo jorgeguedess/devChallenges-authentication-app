@@ -1,6 +1,12 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -133,20 +139,22 @@ export default function EditProfilePage() {
   }, [router, user]);
 
   return (
-    <main>
-      <div className="container mb-10 text-center sm:text-start">
+    <main className="sm:p-4 md:mt-8">
+      <div className="container mx-auto mb-6 flex max-w-[53rem] sm:p-0">
         <Link
           href={"/"}
-          className="mb-4 inline-flex items-center justify-start gap-2 text-link hover:underline focus:underline"
+          className="inline-flex items-start justify-start gap-2 py-1 text-link hover:underline focus:underline"
         >
           <ChevronLeftIcon /> Back
         </Link>
-        <h1 className="mb-2 text-2xl sm:text-4xl">Change Info</h1>
-        <p className="text-sm font-light sm:text-lg">
-          Changes will be reflected to every services
-        </p>
       </div>
       <Card className="mx-auto mb-10 w-full max-w-[53rem]">
+        <CardHeader className="px-8 sm:p-0">
+          <CardTitle className="mb-2 text-primary">Change Info</CardTitle>
+          <CardDescription className="font-light text-primary">
+            Changes will be reflected to every services
+          </CardDescription>
+        </CardHeader>
         <CardContent className="container">
           <Form {...form}>
             <form
