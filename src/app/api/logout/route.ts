@@ -12,5 +12,6 @@ export const POST = async (request: any) => {
   );
 
   response.cookies.delete("token");
+  response.cookies.delete("next-auth.session-token");
   return response;
 };

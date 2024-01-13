@@ -33,6 +33,7 @@ import { useAuth } from "@/context/AuthContext";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AvatarCard } from "./components/avatar-card";
 import { getBase64 } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 const normalize = (text: string) => text.replaceAll("\r\n", "\n");
 
@@ -77,19 +78,18 @@ const formSchema = z.object({
     .or(z.literal("")),
 });
 
-const defaultAvatar = "/images/default-user.png";
-
 export default function EditProfilePage() {
   const router = useRouter();
+  const { data } = useSession();
   const { user } = useAuth();
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
   const values = {
-    name: user?.name,
+    name: user?.name || (data?.user?.name as string),
     bio: user?.bio,
     phone: user?.phone,
-    email: user?.email,
+    email: user?.email || (data?.user?.email as string),
     password: user?.password || "",
     media: user?.media,
   };
@@ -133,10 +133,10 @@ export default function EditProfilePage() {
   };
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !data?.user) {
       router.push("/");
     }
-  }, [router, user]);
+  }, [router, user, data?.user]);
 
   return (
     <main className="sm:p-4 md:mt-8">
@@ -149,7 +149,7 @@ export default function EditProfilePage() {
         </Link>
       </div>
       <Card className="mx-auto mb-10 w-full max-w-[53rem]">
-        <CardHeader className="px-8 sm:p-0">
+        <CardHeader>
           <CardTitle className="mb-2 text-primary">Change Info</CardTitle>
           <CardDescription className="font-light text-primary">
             Changes will be reflected to every services
@@ -169,7 +169,11 @@ export default function EditProfilePage() {
                   <FormItem className="flex items-center gap-5">
                     <FormControl>
                       <AvatarCard
-                        avatar={(avatarPreview as any) ?? user?.photoURL}
+                        avatar={
+                          avatarPreview ||
+                          user?.photoURL ||
+                          (data?.user?.image as string)
+                        }
                         field={field}
                         handleFileChange={handleFileChange}
                       />
@@ -232,17 +236,23 @@ export default function EditProfilePage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
+                      {data?.user ? <Input
                         placeholder="Enter your email..."
                         className="h-14 p-4"
                         {...field}
-                      />
+                        disabled
+                        defaultValue={data?.user?.email || ''} 
+                      /> : <Input
+                      placeholder="Enter your email..."
+                      className="h-14 p-4"
+                      {...field}
+                    />}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
+              {!data?.user &&  <FormField
                 control={form.control}
                 name="password"
                 render={({ field }) => (
@@ -259,7 +269,8 @@ export default function EditProfilePage() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              />}
+         
               <Button type="submit" className="w-20">
                 Save
               </Button>

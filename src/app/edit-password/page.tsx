@@ -36,7 +36,7 @@ const formSchema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password doesn't match",
-    path: ["confirmPassword"], // path of error
+    path: ["confirmPassword"], 
   });
 
 export default function EditPasswordPage(params: any) {

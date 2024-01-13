@@ -1,9 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { getInitials } from "@/lib/utils";
 
 interface CardItemProps {
   title: string;
-  text?: string;
+  text: string;
   image?: string;
 }
 
@@ -15,10 +16,12 @@ export const CardItem = ({ title, text, image }: CardItemProps) => {
           {title}
         </span>
         {image ? (
-          <Avatar className="h-[4.5rem] w-[4.5rem] rounded-lg">
-            <AvatarImage src={image} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <div className="md:w-[30rem]">
+            <Avatar className="h-[4.5rem] w-[4.5rem] rounded-lg">
+              <AvatarImage src={image} />
+              <AvatarFallback>{getInitials(text)}</AvatarFallback>
+            </Avatar>
+          </div>
         ) : (
           <p className="max-w-52 truncate font-medium sm:max-w-[32.5rem] sm:text-lg md:w-[30rem]">
             {text}

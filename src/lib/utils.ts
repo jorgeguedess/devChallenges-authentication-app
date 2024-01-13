@@ -14,3 +14,9 @@ export function getBase64(file: File) {
     reader.onerror = (error) => reject(error);
   });
 }
+
+export function getInitials(name: string) {
+  const words = name.split(' ');
+  const initials = words.map(word => word[0]).join('');
+  return initials.toUpperCase(); 
+}

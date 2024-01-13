@@ -8,7 +8,7 @@ export const middleware = (request: any) => {
     "/forget-password",
     "/login",
   ];
-  const auth = request.cookies.get("token");
+  const auth = request.cookies.get("token" || "next-auth.session-token");
 
   if (publicPath.includes(pathVaiable) && auth) {
     return NextResponse.redirect(new URL("/", request.url));

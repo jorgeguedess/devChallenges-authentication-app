@@ -2,9 +2,11 @@
 
 import { User } from "@/types/user";
 import axios from "axios";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  PropsWithChildren,
+  ReactNode,
   createContext,
   useContext,
   useEffect,
@@ -26,7 +28,12 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
+interface AuthProviderProps {
+  children: ReactNode;
+  session: Session | null;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
   const pathName = usePathname();
   const [user, setUser] = useState<User | null>(null);
@@ -39,7 +46,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       return response;
     } catch (error: any) {
       console.error(error);
-      toast.error(error.message);
+      toast.error(error.message );
       router.push("/login");
     }
   };
@@ -66,13 +73,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }, [pathName]);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        LogoutHandler,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <SessionProvider>
+      <AuthContext.Provider
+        value={{
+          user,
+          LogoutHandler,
+        }}
+      >
+        {children}
+      </AuthContext.Provider>
+    </SessionProvider>
   );
 };

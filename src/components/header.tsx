@@ -16,14 +16,19 @@ import Link from "next/link";
 import { LogOutIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
+import { useSession } from "next-auth/react";
+import { getInitials } from "@/lib/utils";
 
 export const Header = () => {
   const { resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { user, LogoutHandler } = useAuth();
+  const { data } = useSession();
 
-  if (!user) return null;
+  if (!user && !data) {
+    return null; 
+  }
 
   return (
     <header>
@@ -39,12 +44,19 @@ export const Header = () => {
             <Button variant="ghost" className="flex items-center">
               <Avatar>
                 <AvatarImage
-                  src={user?.photoURL || "/images/default-user.png"}
+                  src={
+                    user?.photoURL ||
+                    data?.user?.image ||
+                    "/images/default-user.png"
+                  }
                 />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>{getInitials(user?.name || data?.user?.name as string)}</AvatarFallback>
               </Avatar>
               <div className="sr-only flex items-center gap-3 sm:not-sr-only">
-                {user.name && <p className="capitalize">{user?.name}</p>}
+                {user?.name ||
+                  (data?.user?.name && (
+                    <p className="capitalize">{user?.name || data.user.name}</p>
+                  ))}
                 {isOpen ? (
                   <Icon.DropDown aria-label="Menu open" />
                 ) : (
@@ -67,7 +79,7 @@ export const Header = () => {
             <DropdownMenuItem asChild>
               <Button
                 variant="link"
-                onClick={LogoutHandler}
+                onClick={() => LogoutHandler()}
                 className="flex w-full cursor-pointer items-center justify-start gap-3 text-destructive hover:no-underline"
               >
                 <LogOutIcon />

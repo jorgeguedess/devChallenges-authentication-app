@@ -12,11 +12,13 @@ import { Separator } from "@/components/ui/separator";
 import { CardItem } from "./components/card-item";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
   const { user } = useAuth();
+  const { data } = useSession();
 
-  if (!user)
+  if (!user && !data?.user)
     return (
       <div className="container flex h-full items-center justify-center">
         <p>Loading...</p>
@@ -53,12 +55,23 @@ export default function ProfilePage() {
           <ul className="flex w-full flex-col gap-5">
             <CardItem
               title="photo"
-              image={user?.photoURL || "/images/default-user.png"}
+              text={user?.name || (data?.user?.name as string)}
+              image={
+                user?.photoURL ||
+                data?.user?.image ||
+                "/images/default-user.png"
+              }
             />
-            <CardItem title="name" text={user?.name} />
-            <CardItem title="bio" text={user?.bio} />
-            <CardItem title="phone" text={user?.phone} />
-            <CardItem title="email" text={user?.email} />
+            <CardItem
+              title="name"
+              text={user?.name || (data?.user?.name as string)}
+            />
+            <CardItem title="bio" text={user?.bio as string} />
+            <CardItem title="phone" text={user?.phone as string} />
+            <CardItem
+              title="email"
+              text={user?.email || (data?.user?.email as string)}
+            />
             <CardItem
               title="password"
               text={user?.password || "************"}

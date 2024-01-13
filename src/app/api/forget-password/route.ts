@@ -22,7 +22,6 @@ export const POST = async (request: Request) => {
   }
 
   //   token
-
   const token: any = await GenerateForgetToken(existUser, email);
 
   const mailResponse = await SendEmail(existUser.name, token, email);
