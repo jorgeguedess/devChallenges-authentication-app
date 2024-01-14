@@ -27,7 +27,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${notoSans.className} flex min-h-screen flex-col py-4`}>
+      <body
+        className={`${notoSans.className} flex min-h-screen flex-col py-4 text-primary`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -40,7 +42,7 @@ export default async function RootLayout({
               <ModeToggle />
             </div>
             <Header />
-            {children}
+            <div className="flex-1">{children}</div>
             <Footer />
           </AuthProvider>
         </ThemeProvider>

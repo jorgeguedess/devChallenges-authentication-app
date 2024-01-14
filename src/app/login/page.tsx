@@ -125,7 +125,7 @@ export default function LoginPage() {
             <Button
               disabled={loading}
               type="submit"
-              className="w-full disabled:bg-green-200"
+              className="w-full"
               style={{ marginTop: "1.25rem" }}
             >
               {loading ? "loading..." : "Login"}

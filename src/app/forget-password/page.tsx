@@ -88,7 +88,7 @@ export default function ForgetPasswordPage() {
             />
             <Button
               type="submit"
-              className="w-full disabled:bg-green-200"
+              className="w-full"
               style={{ marginTop: "1.25rem" }}
             >
               Request reset link

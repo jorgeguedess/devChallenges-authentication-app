@@ -9,11 +9,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-button text-white hover:bg-button/90 focus:bg-button/90",
+        default:
+          "bg-button text-white hover:bg-button/90 focus:bg-button/90 disabled:bg-button/10",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-border bg-background text-secondary hover:bg-accent hover:text-accent-foreground",
+          "border border-border bg-background text-secondary hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
@@ -24,6 +25,7 @@ const buttonVariants = cva(
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
+        profile: "h-10 px-4 py-2 rounded-[0.75rem]",
       },
     },
     defaultVariants: {

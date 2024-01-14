@@ -153,7 +153,7 @@ export default function EditPasswordPage(params: any) {
             />
             <Button
               type="submit"
-              className="w-full disabled:bg-green-200"
+              className="w-full"
               style={{ marginTop: "1.25rem" }}
             >
               Reset Password

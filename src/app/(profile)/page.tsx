@@ -13,17 +13,13 @@ import { CardItem } from "./components/card-item";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
+import Loading from "@/app/loading";
 
 export default function ProfilePage() {
   const { user } = useAuth();
   const { data } = useSession();
 
-  if (!user && !data?.user)
-    return (
-      <div className="container flex h-full flex-1 items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
+  if (!user && !data?.user) return <Loading />;
 
   return (
     <main>
@@ -45,13 +41,14 @@ export default function ProfilePage() {
             href={"/edit-profile"}
             className={`${buttonVariants({
               variant: "outline",
+              size: "profile",
             })} w-24`}
           >
             Edit
           </Link>
         </CardHeader>
         <Separator className="hidden sm:block" />
-        <CardContent>
+        <CardContent className="sm:py-6">
           <ul className="flex w-full flex-col gap-5">
             <CardItem
               title="photo"
@@ -75,6 +72,7 @@ export default function ProfilePage() {
             <CardItem
               title="password"
               text={user?.password || "************"}
+              notSeparator
             />
           </ul>
         </CardContent>

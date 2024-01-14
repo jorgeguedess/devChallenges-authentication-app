@@ -51,7 +51,7 @@ export const SocialButtons = () => {
           key={index}
           variant="link"
           aria-label={provider.providerName}
-          className="rounded-full p-0 hover:bg-primary-foreground focus:bg-primary-foreground"
+          className="rounded-full p-0 hover:bg-input focus:bg-input"
           onClick={() => handleOAuthSignIn(provider.providerName)}
         >
           {provider?.Icon}
