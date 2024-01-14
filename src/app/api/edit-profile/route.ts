@@ -57,7 +57,6 @@ export const PUT = async (request: any) => {
   }
 
   if (media !== null) {
-    console.log(media);
     updateFields.photoURL = media;
   }
 

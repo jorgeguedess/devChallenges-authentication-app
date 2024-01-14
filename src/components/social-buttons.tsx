@@ -39,7 +39,6 @@ export const SocialButtons = () => {
         router.push("/");
       } catch (error: any) {
         console.log({ error });
-        toast.error(error?.response?.data?.error);
       }
     }
     LoginProviderAuth(values);

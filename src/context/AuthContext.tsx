@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const pathName = usePathname();
   const [user, setUser] = useState<User | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await axios.get("/api/profile");
       const data = await response.data;
@@ -46,10 +47,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return response;
     } catch (error: any) {
       console.error(error);
-      toast.error(error.message );
+      toast.error(error.message);
       router.push("/login");
     }
-  };
+  }, [router]);
 
   const LogoutHandler = async () => {
     try {
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } else {
       setUser(null);
     }
-  }, [pathName]);
+  }, [fetchData, pathName]);
 
   return (
     <SessionProvider>

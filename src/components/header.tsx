@@ -18,6 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
 import { getInitials } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export const Header = () => {
   const { resolvedTheme } = useTheme();
@@ -25,70 +26,76 @@ export const Header = () => {
 
   const { user, LogoutHandler } = useAuth();
   const { data } = useSession();
+  const pathname = usePathname();
 
   if (!user && !data) {
-    return null; 
+    return null;
   }
 
-  return (
-    <header>
-      <div className="container flex w-full items-center justify-between py-5">
-        {resolvedTheme === "dark" ? (
-          <Svg.LogoWhite aria-label="devchallenges logo" />
-        ) : (
-          <Svg.Logo aria-label="devchallenges logo" />
-        )}
+  if (pathname !== "/login" && pathname !== "/register")
+    return (
+      <header>
+        <div className="container flex w-full items-center justify-between py-5">
+          {resolvedTheme === "dark" ? (
+            <Svg.LogoWhite aria-label="devchallenges logo" />
+          ) : (
+            <Svg.Logo aria-label="devchallenges logo" />
+          )}
 
-        <DropdownMenu onOpenChange={() => setIsOpen(!isOpen)}>
-          <DropdownMenuTrigger asChild className="flex gap-3">
-            <Button variant="ghost" className="flex items-center">
-              <Avatar>
-                <AvatarImage
-                  src={
-                    user?.photoURL ||
-                    data?.user?.image ||
-                    "/images/default-user.png"
-                  }
-                />
-                <AvatarFallback>{getInitials(user?.name || data?.user?.name as string)}</AvatarFallback>
-              </Avatar>
-              <div className="sr-only flex items-center gap-3 sm:not-sr-only">
-                {user?.name ||
-                  (data?.user?.name && (
-                    <p className="capitalize">{user?.name || data.user.name}</p>
-                  ))}
-                {isOpen ? (
-                  <Icon.DropDown aria-label="Menu open" />
-                ) : (
-                  <Icon.DropUp aria-label="Menu close" />
-                )}
-              </div>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="mt-2 w-52" align="end">
-            <DropdownMenuItem asChild>
-              <Link
-                href="/edit-profile"
-                className="flex w-full cursor-pointer items-center gap-3"
-              >
-                <Icon.Account />
-                Edit Profile
-              </Link>
-            </DropdownMenuItem>
-            <Separator className="my-2" />
-            <DropdownMenuItem asChild>
-              <Button
-                variant="link"
-                onClick={() => LogoutHandler()}
-                className="flex w-full cursor-pointer items-center justify-start gap-3 text-destructive hover:no-underline"
-              >
-                <LogOutIcon />
-                Logout
+          <DropdownMenu onOpenChange={() => setIsOpen(!isOpen)}>
+            <DropdownMenuTrigger asChild className="flex gap-3">
+              <Button variant="ghost" className="flex items-center">
+                <Avatar>
+                  <AvatarImage
+                    src={
+                      user?.photoURL ||
+                      data?.user?.image ||
+                      "/images/default-user.png"
+                    }
+                  />
+                  <AvatarFallback>
+                    {getInitials(user?.name || (data?.user?.name as string))}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="sr-only flex items-center gap-3 sm:not-sr-only">
+                  {user?.name ||
+                    (data?.user?.name && (
+                      <p className="capitalize">
+                        {user?.name || data.user.name}
+                      </p>
+                    ))}
+                  {isOpen ? (
+                    <Icon.DropDown aria-label="Menu open" />
+                  ) : (
+                    <Icon.DropUp aria-label="Menu close" />
+                  )}
+                </div>
               </Button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </header>
-  );
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mt-2 w-52" align="end">
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/edit-profile"
+                  className="flex w-full cursor-pointer items-center gap-3"
+                >
+                  <Icon.Account />
+                  Edit Profile
+                </Link>
+              </DropdownMenuItem>
+              <Separator className="my-2" />
+              <DropdownMenuItem asChild>
+                <Button
+                  variant="link"
+                  onClick={() => LogoutHandler()}
+                  className="flex w-full cursor-pointer items-center justify-start gap-3 text-destructive hover:no-underline"
+                >
+                  <LogOutIcon />
+                  Logout
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </header>
+    );
 };

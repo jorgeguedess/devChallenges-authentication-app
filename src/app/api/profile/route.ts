@@ -9,7 +9,6 @@ ConnectDB();
 export const GET = async (request: any) => {
   const auth = request.cookies.get("token" || "next-auth.session-token") || "";
   const session = await getServerSession(authOptions);
-  console.log("PROFILE AUTH: ", auth);
 
   if (!auth) {
     return NextResponse.json(
@@ -25,8 +24,6 @@ export const GET = async (request: any) => {
 
   const { userId }: any = await VerifyToken(auth.value);
   const verify = await VerifyToken(auth.value);
-  console.log(verify);
-  console.log(auth, userId);
 
   if (!userId) {
     return NextResponse.json(

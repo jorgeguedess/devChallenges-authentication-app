@@ -5,10 +5,10 @@ import { UserModel } from "@/lib/models/User.models";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-ConnectDB();
 export const POST = async (request: Request) => {
   const { email, password } = await request.json();
   const session = await getServerSession(authOptions);
+  await ConnectDB();
 
   let existUser;
   if (session) {
