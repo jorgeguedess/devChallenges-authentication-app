@@ -14,6 +14,7 @@ import {
   useState,
 } from "react";
 import toast from "react-hot-toast";
+import { signOut } from "next-auth/react";
 
 interface AuthContextInterface {
   user: User | null;
@@ -58,6 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const data = await response.data;
       toast.success(data.msg);
       setUser(null);
+      signOut();
       router.push("/login");
     } catch (error: any) {
       toast.error(error.response?.data?.error);

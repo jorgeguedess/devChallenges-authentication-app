@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/context/AuthContext";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { LoginProvider } from "@/context/LoginContext";
 
 const notoSans = Noto_Sans({ subsets: ["latin"] });
 
@@ -37,13 +38,15 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider session={session}>
-            <Toaster />
-            <div className="flex flex-col items-end p-2">
-              <ModeToggle />
-            </div>
-            <Header />
-            <div className="flex-1">{children}</div>
-            <Footer />
+            <LoginProvider values={session?.user}>
+              <Toaster />
+              <div className="flex flex-col items-end p-2">
+                <ModeToggle />
+              </div>
+              <Header />
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </LoginProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

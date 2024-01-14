@@ -1,12 +1,7 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/icons";
-import { ReactNode, useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { ReactNode } from "react";
+import { signIn } from "next-auth/react";
 
 interface IProviders {
   providerName: "google" | "facebook" | "twitter" | "github";
@@ -21,28 +16,9 @@ const providers: IProviders[] = [
 ];
 
 export const SocialButtons = () => {
-  const { data } = useSession();
-  const router = useRouter();
-
   const handleOAuthSignIn = (provider: string) => {
     signIn(provider);
   };
-
-  useEffect(() => {
-    if (!data?.user) return;
-    const values = data.user;
-    async function LoginProviderAuth(values: any) {
-      try {
-        const response = await axios.post("/api/login", values);
-        const data = await response.data;
-        toast.success(data.msg);
-        router.push("/");
-      } catch (error: any) {
-        console.log({ error });
-      }
-    }
-    LoginProviderAuth(values);
-  }, [data, router]);
 
   return (
     <div className="mb-8 flex items-center justify-center gap-4">
