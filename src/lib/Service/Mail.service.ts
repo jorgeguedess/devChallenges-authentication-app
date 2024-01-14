@@ -16,10 +16,10 @@ export const SendEmail = async (name: string, token: string, email: string) => {
     to: email,
     subject: "Forget Password",
     html: `
-      Hey, ${name},
-      yout forget password link is below click the link <br/>
-      <a href="http://localhost:3000/edit-password/?token=${token}">Click</a>
-    `,
+    Hey, ${name},
+    you forgot your password. Click the link below to reset it. <br/>
+    <a href="https://dev-challenges-authentication-app.vercel.app/edit-password/?token=${token}" style="color: hsl(202,71%,52%); margin-top: 10px; text-decoration: underline; padding-top: 5px; display: inline-block;">Click</a>
+  `,
   });
   return info;
 };
