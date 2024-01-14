@@ -17,7 +17,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Svg } from "@/components/svg";
 import Link from "next/link";
-import { LockKeyholeIcon, MailIcon } from "lucide-react";
+import { Icon } from "@/components/icons";
+
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -90,7 +91,7 @@ export default function LoginPage() {
                   <FormControl>
                     <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                        <MailIcon />
+                        <Icon.Mail />
                       </div>
                       <Input placeholder="Email" {...field} className="pl-12" />
                     </div>
@@ -107,7 +108,7 @@ export default function LoginPage() {
                   <FormControl>
                     <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                        <LockKeyholeIcon />
+                        <Icon.LockKeyhole />
                       </div>
                       <Input
                         placeholder="Password"

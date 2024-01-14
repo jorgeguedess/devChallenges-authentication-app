@@ -25,7 +25,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { phoneRegex } from "@/constants/regex";
 import Link from "next/link";
-import { ChevronLeftIcon } from "lucide-react";
+import { Icon } from "@/components/icons";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -145,17 +145,19 @@ export default function EditProfilePage() {
           href={"/"}
           className="inline-flex items-start justify-start gap-2 py-1 text-link hover:underline focus:underline"
         >
-          <ChevronLeftIcon /> Back
+          <Icon.ChevronLeft /> Back
         </Link>
       </div>
       <Card className="mx-auto mb-10 w-full max-w-[53rem]">
-        <CardHeader>
-          <CardTitle className="mb-2 text-primary">Change Info</CardTitle>
-          <CardDescription className="font-light text-primary">
+        <CardHeader className="container mx-auto mb-6 sm:mb-0 sm:space-y-0">
+          <CardTitle className="mb-2 font-normal text-primary">
+            Change Info
+          </CardTitle>
+          <CardDescription className="font-medium text-secondary">
             Changes will be reflected to every services
           </CardDescription>
         </CardHeader>
-        <CardContent className="container">
+        <CardContent className="container sm:py-6">
           <Form {...form}>
             <form
               method="post"
@@ -191,7 +193,7 @@ export default function EditProfilePage() {
                     <FormControl>
                       <Input
                         placeholder="Enter your name..."
-                        className="h-14 p-4"
+                        className="h-14 p-4 sm:max-w-[26rem]"
                         {...field}
                       />
                     </FormControl>
@@ -206,7 +208,11 @@ export default function EditProfilePage() {
                   <FormItem>
                     <FormLabel>Bio</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Enter your bio..." {...field} />
+                      <Textarea
+                        placeholder="Enter your bio..."
+                        {...field}
+                        className="resize-none border-border sm:max-w-[26rem]"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -221,7 +227,7 @@ export default function EditProfilePage() {
                     <FormControl>
                       <Input
                         placeholder="Enter your phone..."
-                        className="h-14 p-4"
+                        className="h-14 p-4 sm:max-w-[26rem]"
                         {...field}
                       />
                     </FormControl>
@@ -236,41 +242,47 @@ export default function EditProfilePage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      {data?.user ? <Input
-                        placeholder="Enter your email..."
-                        className="h-14 p-4"
-                        {...field}
-                        disabled
-                        defaultValue={data?.user?.email || ''} 
-                      /> : <Input
-                      placeholder="Enter your email..."
-                      className="h-14 p-4"
-                      {...field}
-                    />}
+                      {data?.user ? (
+                        <Input
+                          placeholder="Enter your email..."
+                          className="h-14 p-4 sm:max-w-[26rem]"
+                          {...field}
+                          disabled
+                          defaultValue={data?.user?.email || ""}
+                        />
+                      ) : (
+                        <Input
+                          placeholder="Enter your email..."
+                          className="h-14 p-4 sm:max-w-[26rem]"
+                          {...field}
+                        />
+                      )}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {!data?.user &&  <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your new password..."
-                        type="password"
-                        className="h-14 p-4"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />}
-         
+              {!data?.user && (
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your new password..."
+                          type="password"
+                          className="h-14 p-4 sm:max-w-[26rem]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
               <Button type="submit" className="w-20">
                 Save
               </Button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeftIcon } from "lucide-react";
+import { Icon } from "@/components/icons";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -21,7 +21,7 @@ export default function NotFound() {
           className="mt-6 flex items-center space-x-2 rounded bg-blue-600 px-4 py-2 text-gray-100 transition duration-150 hover:bg-blue-700"
           title="Return Home"
         >
-          <ArrowLeftIcon />
+          <Icon.ArrowLeft />
           <span>Return Home</span>
         </Link>
       </div>

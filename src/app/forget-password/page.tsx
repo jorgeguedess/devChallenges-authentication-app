@@ -17,7 +17,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Svg } from "@/components/svg";
 import Link from "next/link";
-import { MailIcon } from "lucide-react";
+import { Icon } from "@/components/icons";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -67,7 +67,7 @@ export default function ForgetPasswordPage() {
           <form
             method="post"
             onSubmit={form.handleSubmit(onSubmitHandler)}
-            className="mb-7 space-y-2"
+            className="mb-7 space-y-0 text-input"
           >
             <FormField
               control={form.control}
@@ -77,7 +77,7 @@ export default function ForgetPasswordPage() {
                   <FormControl>
                     <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                        <MailIcon />
+                        <Icon.Mail />
                       </div>
                       <Input placeholder="Email" {...field} className="pl-12" />
                     </div>

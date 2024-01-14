@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CameraIcon } from "lucide-react";
+import { Icon } from "@/components/icons";
 
 import { Input } from "@/components/ui/input";
 import { ChangeEvent } from "react";
@@ -46,7 +46,7 @@ export const AvatarCard = ({
             className="absolute inset-0 flex cursor-pointer flex-col items-center justify-center bg-black/60 transition-colors hover:bg-black/40"
             aria-label="Change Photo"
           >
-            <CameraIcon className="text-white" />
+            <Icon.Camera className="text-white" />
           </div>
         </div>
         <span className="sr-only text-sm uppercase text-secondary sm:not-sr-only">

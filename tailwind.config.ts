@@ -26,6 +26,7 @@ const config: Config = {
         link: "hsl(var(--link))",
         button: "hsl(var(--button))",
         label: "hsl(var(--label))",
+        icon: "hsl(var(--icon))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

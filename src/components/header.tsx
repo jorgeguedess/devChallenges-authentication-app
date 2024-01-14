@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Icon } from "@/components/icons";
 import { useState } from "react";
 import Link from "next/link";
-import { LogOutIcon } from "lucide-react";
+
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
@@ -47,6 +47,7 @@ export const Header = () => {
               <Button variant="ghost" className="flex items-center">
                 <Avatar>
                   <AvatarImage
+                    className="rounded-full border border-border"
                     src={
                       user?.photoURL ||
                       data?.user?.image ||
@@ -72,24 +73,36 @@ export const Header = () => {
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="mt-2 w-52" align="end">
+            <DropdownMenuContent
+              className="mt-2 flex w-52 flex-col gap-2"
+              align="end"
+            >
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/"
+                  className="flex w-full cursor-pointer items-center gap-3"
+                >
+                  <Icon.User />
+                  My Profile
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
                   href="/edit-profile"
                   className="flex w-full cursor-pointer items-center gap-3"
                 >
-                  <Icon.Account />
+                  <Icon.UserRoundCog />
                   Edit Profile
                 </Link>
               </DropdownMenuItem>
-              <Separator className="my-2" />
+              <Separator className="my-1" />
               <DropdownMenuItem asChild>
                 <Button
                   variant="link"
                   onClick={() => LogoutHandler()}
                   className="flex w-full cursor-pointer items-center justify-start gap-3 text-destructive hover:no-underline"
                 >
-                  <LogOutIcon />
+                  <Icon.LogOut />
                   Logout
                 </Button>
               </DropdownMenuItem>

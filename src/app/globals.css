@@ -34,18 +34,19 @@
     --link: 202 71% 52%;
     --button: 214 84% 56%;
     --label: 0 0% 31%;
+    --icon: 0, 0%, 51%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 260 8% 15% 1;
+    --background: 260 8% 15%;
     --foreground: 0 0% 98%;
 
     --card: 260 8% 15% 1;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 3.9%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 0 0% 88%;
@@ -69,6 +70,7 @@
     --link: 202 71% 52%;
     --button: 214 84% 56%;
     --label: 0 0% 69%;
+    --icon: 0, 0%, 51%;
   }
 }
 

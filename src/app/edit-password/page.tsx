@@ -17,7 +17,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Svg } from "@/components/svg";
 import Link from "next/link";
-import { LockKeyholeIcon, MailIcon } from "lucide-react";
+import { Icon } from "@/components/icons";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -36,7 +36,7 @@ const formSchema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password doesn't match",
-    path: ["confirmPassword"], 
+    path: ["confirmPassword"],
   });
 
 export default function EditPasswordPage(params: any) {
@@ -98,7 +98,7 @@ export default function EditPasswordPage(params: any) {
                   <FormControl>
                     <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                        <MailIcon />
+                        <Icon.Mail />
                       </div>
                       <Input placeholder="Email" {...field} className="pl-12" />
                     </div>
@@ -115,7 +115,7 @@ export default function EditPasswordPage(params: any) {
                   <FormControl>
                     <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                        <LockKeyholeIcon />
+                        <Icon.LockKeyhole />
                       </div>
                       <Input
                         placeholder="Password"
@@ -137,7 +137,7 @@ export default function EditPasswordPage(params: any) {
                   <FormControl>
                     <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                        <LockKeyholeIcon />
+                        <Icon.LockKeyhole />
                       </div>
                       <Input
                         placeholder="Confirm Password"
