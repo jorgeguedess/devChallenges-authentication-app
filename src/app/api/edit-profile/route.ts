@@ -49,6 +49,19 @@ export const PUT = async (request: any) => {
     );
   }
 
+  const existingEmailUser = await UserModel.findOne({ email });
+  if (existingEmailUser && existingEmailUser._id.toString() !== userId) {
+    return NextResponse.json(
+      {
+        msg: null,
+        error: "Email is already in use",
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+
   let updateFields: any = { name, email, bio, phone };
 
   if (password && password.length > 0) {
