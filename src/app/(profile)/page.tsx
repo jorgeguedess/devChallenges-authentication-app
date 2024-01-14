@@ -20,7 +20,7 @@ export default function ProfilePage() {
 
   if (!user && !data?.user)
     return (
-      <div className="container flex h-full items-center justify-center">
+      <div className="container flex h-full flex-1 items-center justify-center">
         <p>Loading...</p>
       </div>
     );
