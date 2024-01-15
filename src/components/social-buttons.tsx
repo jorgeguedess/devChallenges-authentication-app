@@ -21,7 +21,7 @@ export const SocialButtons = () => {
   };
 
   return (
-    <div className="mb-8 flex items-center justify-center gap-4">
+    <div className="mb-4 flex items-center justify-center gap-4 sm:mb-8">
       {providers.map((provider, index) => (
         <Button
           key={index}

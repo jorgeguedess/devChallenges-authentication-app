@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="container mx-auto mt-5 max-w-[30rem] text-sm text-secondary sm:p-0">
-      <div className="flex items-center justify-between">
+    <footer className="container hidden text-sm text-secondary sm:block">
+      <div className="mx-auto mt-1 flex max-w-[30rem] items-center justify-between sm:mt-5">
         <p>
           <span className="sr-only sm:not-sr-only sm:mr-1 sm:inline-block">
             created by

@@ -70,14 +70,14 @@ export default function RegisterPage() {
   };
 
   return (
-    <Card className="mx-auto mb-3 w-full max-w-[30rem] py-4 sm:py-8">
-      <CardHeader className="container mb-5 gap-5 sm:mb-0">
+    <Card className="mx-auto mb-3 w-full max-w-[30rem] py-2 sm:py-8">
+      <CardHeader className="container mb-5 gap-2 sm:mb-0 sm:gap-5">
         {resolvedTheme === "dark" ? (
           <Svg.LogoWhite aria-label="devchallenges logo" />
         ) : (
           <Svg.Logo aria-label="devchallenges logo" />
         )}
-        <CardTitle className="mb-4 max-w-80 text-lg font-semibold">
+        <CardTitle className="mb-2 max-w-80 text-lg font-semibold sm:mb-4">
           Join thousands of learners from around the world
         </CardTitle>
         <CardDescription className="max-w-80 text-primary">

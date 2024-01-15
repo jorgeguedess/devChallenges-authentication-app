@@ -53,7 +53,7 @@ export default function ForgetPasswordPage() {
     }
   };
   return (
-    <Card className="mx-auto mb-3 w-full max-w-[30rem] py-4 sm:py-8">
+    <Card className="mx-auto mb-3 w-full max-w-[30rem] py-2 sm:py-8">
       <CardHeader className="container mb-5 gap-5 sm:mb-0">
         {resolvedTheme === "dark" ? (
           <Svg.LogoWhite aria-label="devchallenges logo" />
