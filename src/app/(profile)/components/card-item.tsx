@@ -22,7 +22,7 @@ export const CardItem = ({
         {image ? (
           <div className="md:w-[30rem]">
             <Avatar className="h-[4.5rem] w-[4.5rem] rounded-lg">
-              <AvatarImage src={image} />
+              <AvatarImage src={image} className="object-cover" />
               <AvatarFallback>{getInitials(text)}</AvatarFallback>
             </Avatar>
           </div>

@@ -47,7 +47,7 @@ export const Header = () => {
               <Button variant="ghost" className="flex items-center">
                 <Avatar>
                   <AvatarImage
-                    className="rounded-full border border-border"
+                    className="rounded-full border border-border object-cover"
                     src={
                       user?.photoURL ||
                       data?.user?.image ||
