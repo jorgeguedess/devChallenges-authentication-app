@@ -24,7 +24,7 @@ export const config = {
     "/",
     "/update-profile",
     "/edit-password",
-    "/update-password",
+    "/forget-password",
     "/register",
     "/login",
   ],

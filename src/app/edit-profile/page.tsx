@@ -83,6 +83,8 @@ export default function EditProfilePage() {
   const { data } = useSession();
   const { user } = useAuth();
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
   const values = {
@@ -121,6 +123,7 @@ export default function EditProfilePage() {
   const onSubmitHandler: SubmitHandler<z.infer<typeof formSchema>> = async (
     values,
   ) => {
+    setLoading(true);
     try {
       const response = await axios.put("/api/edit-profile", values);
       const data = await response.data;
@@ -129,6 +132,8 @@ export default function EditProfilePage() {
     } catch (error: any) {
       console.error(error);
       toast.error(error?.response?.data?.error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -283,7 +288,7 @@ export default function EditProfilePage() {
                 />
               )}
 
-              <Button type="submit" className="w-20">
+              <Button type="submit" className="w-20" disabled={loading}>
                 Save
               </Button>
             </form>
